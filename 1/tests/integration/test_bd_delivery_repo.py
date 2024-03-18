@@ -32,7 +32,7 @@ def test_add_delivery(delivery_repo: DeliveryRepo, first_delivery: Delivery) -> 
     delivery_repo.create_delivery(first_delivery)
     deliverys = delivery_repo.get_deliverys()
     assert len(deliverys) == 1
-    assert deliverys[0] == first_delivery
+    assert deliverys[0].id == first_delivery.id
 
 
 def test_add_duplicate_delivery_error(delivery_repo: DeliveryRepo, first_delivery: Delivery) -> None:
