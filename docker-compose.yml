@@ -1,0 +1,27 @@
+version: '3'
+
+services: 
+  task_service:
+    container_name: task_service
+    build: ./Services/TaskService/.
+    ports:
+      - 8000:80
+    environment:
+      - POSTGRES_URL=postgresql+psycopg2://admin:admin@localhost:5432/TaskService_db
+      - AMQP_URL=amqp://guest:guest@rabbitmq:5672/
+  
+  user_service:
+    container_name: user_service
+    build: ./Services/UserService/.
+    ports:
+      - 8001:80
+    environment:
+      - AMQP_URL=amqp://guest:guest@rabbitmq:5672/
+  
+  notification_service:
+    container_name: notification_service
+    build: ./Services/NotificationService/.
+    ports:
+      - 8002:80
+    environment:
+      - AMQP_URL=amqp://guest:guest@rabbitmq:5672/
