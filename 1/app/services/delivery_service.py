@@ -4,32 +4,32 @@ from uuid import UUID
 
 import requests
 
-from app.models.telivery import Delivery, DeliveryStatuses
-from app.repositories.bd_telivery_repo import DeliveryRepo
+from app.models.delivery import Delivery, DeliveryStatuses
+from app.repositories.bd_delivery_repo import DeliveryRepo
 from app.rabbitmq_produce import send_notification
 
 
 class DeliveryService:
-    telivery_repo: DeliveryRepo
+    delivery_repo: DeliveryRepo
 
     def __init__(self) -> None:
-        self.telivery_repo = DeliveryRepo()
+        self.delivery_repo = DeliveryRepo()
 
-    def get_teliverys(self) -> list[Delivery]:
-        return self.telivery_repo.get_teliverys()
+    def get_deliverys(self) -> list[Delivery]:
+        return self.delivery_repo.get_deliverys()
 
-    def create_telivery(self, title: str, description: str, user_id: UUID):
-        new_telivery = Delivery(id=uuid.uuid4(), title=title, description=description, user_id=user_id,
+    def create_delivery(self, title: str, description: str, user_id: UUID):
+        new_delivery = Delivery(id=uuid.uuid4(), title=title, description=description, user_id=user_id,
                             status=DeliveryStatuses.ACTIVATE)
-        send_notification(new_telivery)
-        return self.telivery_repo.create_telivery(new_telivery)
+        send_notification(new_delivery)
+        return self.delivery_repo.create_delivery(new_delivery)
 
-    def done_telivery(self, telivery_id: UUID) -> Delivery:
-        telivery = self.telivery_repo.get_telivery_by_id(telivery_id)
+    def done_delivery(self, delivery_id: UUID) -> Delivery:
+        delivery = self.delivery_repo.get_delivery_by_id(delivery_id)
 
-        if telivery.status == DeliveryStatuses.DONE:
+        if delivery.status == DeliveryStatuses.DONE:
             raise ValueError
 
-        telivery.status = DeliveryStatuses.DONE
-        send_notification(telivery)
-        return self.telivery_repo.done_telivery(telivery)
+        delivery.status = DeliveryStatuses.DONE
+        send_notification(delivery)
+        return self.delivery_repo.done_delivery(delivery)
