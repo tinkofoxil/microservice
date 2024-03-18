@@ -34,6 +34,7 @@ jobs:
         run: |
           sudo docker run --name pg-tests -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:14
           cd ./1
+          rm ./.env
           echo "AMQP_URL=$AMQP_URL
           POSTGRES_URL=$POSTGRES_URL
           PORT=$PORT
