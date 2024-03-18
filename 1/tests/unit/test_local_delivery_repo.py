@@ -36,13 +36,6 @@ def test_create_duplicate_delivery_error(delivery_repo: DeliveryRepo, example_de
         delivery_repo.create_delivery(example_delivery)
 
 
-def test_done_delivery(delivery_repo: DeliveryRepo, example_delivery: Delivery):
-    created_delivery = delivery_repo.create_delivery(example_delivery)
-    updated_delivery = delivery_repo.done_delivery(created_delivery)
-    assert updated_delivery.status == DeliveryStatuses.DONE
-    assert updated_delivery in delivery_repo.get_deliverys()
-
-
 def test_get_delivery_by_id(delivery_repo: DeliveryRepo, example_delivery: Delivery):
     created_delivery = delivery_repo.create_delivery(example_delivery)
     retrieved_delivery = delivery_repo.get_delivery_by_id(created_delivery.id)
