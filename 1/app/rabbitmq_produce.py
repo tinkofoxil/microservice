@@ -21,11 +21,9 @@ def send_notification(delivery):
         "status": str(delivery.status)
     }
 
-    channel.exchange_declare(exchange='orlov_notification_created_exchange', exchange_type='direct', durable=True)
+    channel.exchange_declare(exchange='kabachkov_notification_created_exchange', exchange_type='direct', durable=True)
     message_body = json.dumps(new_notification)
-    # channel.basic_publish(exchange='orlov_notification_created_exchange', routing_key=str(delivery.user_id),
-    #                       body=message_body.encode('utf-8'))
-    channel.basic_publish(exchange='orlov_notification_created_exchange', routing_key="notification_service",
+    channel.basic_publish(exchange='kabachkov_notification_created_exchange', routing_key="notification_service",
                           body=message_body.encode('utf-8'))
 
     connection.close()

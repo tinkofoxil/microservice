@@ -25,9 +25,9 @@ async def consume(loop: AbstractEventLoop) -> AbstractRobustConnection:
     connection = await connect_robust(settings.amqp_url, loop=loop)
     channel = await connection.channel()
 
-    notification_created_queue = await channel.declare_queue('orlov_notification_created_queue', durable=True)
+    notification_created_queue = await channel.declare_queue('kabachkov_notification_created_queue', durable=True)
 
-    await notification_created_queue.bind('orlov_notification_created_exchange', routing_key="notification_service")
+    await notification_created_queue.bind('kabachkov_notification_created_exchange', routing_key="notification_service")
 
     await notification_created_queue.consume(process_created_notification)
     print('Started RabbitMQ consuming...')

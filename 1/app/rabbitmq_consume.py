@@ -24,7 +24,7 @@ async def consume(loop: AbstractEventLoop) -> AbstractRobustConnection:
     connection = await connect_robust(settings.amqp_url, loop=loop)
     channel = await connection.channel()
 
-    delivery_created_queue = await channel.declare_queue('orlov_delivery_created_queue', durable=True)
+    delivery_created_queue = await channel.declare_queue('kabachkov_delivery_created_queue', durable=True)
 
     await delivery_created_queue.consume(process_created_delivery)
     print('Started RabbitMQ consuming...')
